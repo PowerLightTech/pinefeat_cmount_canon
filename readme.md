@@ -1,3 +1,5 @@
+# This fork was produced so we could add a Python GUI for standalone lens control (no dependencies on ASCOM/INDI)
+# for use with our bolt-on context camera on the Denali Bridge TX
 # EF & EF-S lens controller for Raspberry Pi® Camera – Canon® Lens Compatible
 
 [Pinefeat](https://www.pinefeat.co.uk) produces the adapter designed to interface between [Canon EF](https://www.canon.co.uk/store/ef-lenses/) & [EF-S lenses](https://www.canon.co.uk/store/ef-s-lenses/) and non-Canon camera bodies, incorporating features for electronic focus and aperture adjustments. Circuit board _cef168_, that comes with the adapter, provides software programming interface allowing control of the lens focus and aperture positions.
