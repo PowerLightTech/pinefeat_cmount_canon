@@ -267,6 +267,11 @@ communicates with the lens via the serial connection, which requires the board t
 
 The control board serial protocol is described [here](doc/serial.md).
 
+A standalone, cross-platform (Windows/Linux/macOS) app for controlling
+focus/aperture directly over this serial interface — with no INDI/ASCOM
+dependency — is available in [`python/`](python/README.md), providing both a
+CLI (`cef168`) and a GUI (`cef168-gui`).
+
 ## Helpful Hints
 
 This section provides a collection of useful tips and recommendations to help you get the most out of this project.

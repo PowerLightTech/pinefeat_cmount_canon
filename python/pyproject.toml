@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cef168-control"
+version = "0.1.0"
+description = "Standalone controller (CLI + GUI) for the Pinefeat cef168 lens controller serial protocol"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pyserial>=3.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+cef168 = "cef168_control.cli:main"
+cef168-gui = "cef168_control.gui:main"
+
+[tool.setuptools.packages.find]
+include = ["cef168_control*"]
