@@ -1,6 +1,6 @@
-# EF & EF-S lens controller for Raspberry Pi® Camera – Canon® Lens Compatible
+# EF & EF-S lens controller for c-mount camera – Canon® Lens Compatible
 This fork was produced so we could add a Python GUI for standalone lens control (no dependencies on ASCOM/INDI) for use with our bolt-on context camera on the Denali Bridge TX.
-cef168 lens control is same as https://github.com/pinefeat/cef135; the main (only?) difference is whether the interface is USB-UART or direct UART.
+cef168 lens control is same as cef135; the main (only?) difference is whether the interface is USB-UART or direct UART.
 
 [Pinefeat](https://www.pinefeat.co.uk) produces the adapter designed to interface between [Canon EF](https://www.canon.co.uk/store/ef-lenses/) & [EF-S lenses](https://www.canon.co.uk/store/ef-s-lenses/) and non-Canon camera bodies, incorporating features for electronic focus and aperture adjustments. Circuit board _cef168_ or _cef135_, that comes with the adapter, provides software programming interface allowing control of the lens focus and aperture positions.
 
@@ -8,9 +8,13 @@ This repository contains kernel driver, configuration and calibration tools that
 
 The solution allows you to mount **Canon EF** or **EF-S lens** onto the [Raspberry Pi High Quality Camera](https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/) and have features like [autofocus](https://en.wikipedia.org/wiki/Autofocus) and [aperture](https://en.wikipedia.org/wiki/Aperture) control available in [rpicam-apps](https://www.raspberrypi.com/documentation/computers/camera_software.html#rpicam-apps), _libcamera_ or V4L2 (Video4Linux2) API.
 
-![Assembly of Pinefeat Lens Controller and Raspberry Pi High-Quality Camera](https://docs.pinefeat.co.uk/cef168-assembly-rpi-hq-camera.jpg)
+![The Adapter](https://docs.pinefeat.co.uk/cef135-product-image-M42-astro.jpg)
 
-Raspberry Pi cameras use [libcamera](https://www.raspberrypi.com/documentation/computers/camera_software.html#libcamera) as their primary driver and API to interact with the Linux system. This lens controller driver integrates into libcamera stack, communicating with the lens hardware through the I2C bus.
+## 🔗 Connecting the Adapter
+
+The adapter supports USB CDC (Communications Device Class) and emulates serial communication over USB. When connected, the USB device appears as a serial port on the host system.
+
+**Note**: Before connecting the lens, disconnect the adapter from the USB cable.
 
 ## Table of contents
 * [Disclaimer](#disclaimer)
