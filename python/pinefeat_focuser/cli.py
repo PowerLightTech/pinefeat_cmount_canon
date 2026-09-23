@@ -1,4 +1,4 @@
-"""Command-line interface for controlling a cef168 lens controller board."""
+"""Command-line interface for controlling a Pinefeat focuser board."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ def _resolve_connection(args: argparse.Namespace) -> tuple[str, int]:
     if not port:
         print(
             "error: no serial port specified and none saved yet; "
-            "use --port or run 'cef168 ports' to list available ports",
+            "use --port or run 'pinefeat-focuser ports' to list available ports",
             file=sys.stderr,
         )
         sys.exit(2)
@@ -59,7 +59,7 @@ def _run(func, args: argparse.Namespace) -> int:
     try:
         func(lens, args)
         return 0
-    except proto.CefError as exc:
+    except proto.PinefeatFocuserError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
     finally:
@@ -193,8 +193,8 @@ def _status(lens: LensController, args: argparse.Namespace) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="cef168",
-        description="Standalone controller for the Pinefeat cef168 lens controller (serial protocol).",
+        prog="pinefeat-focuser",
+        description="Standalone controller for Pinefeat focuser boards (cef168, cef135, and compatible boards; serial protocol).",
     )
     parser.add_argument("--port", help="Serial port, e.g. COM3 or /dev/ttyUSB0")
     parser.add_argument("--baud", type=int, help="Baud rate (default 115200)")

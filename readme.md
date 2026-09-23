@@ -1,6 +1,8 @@
-# EF & EF-S lens controller for Raspberry Pi® Camera – Canon® Lens Compatible
+# EF & EF-S lens controller – Canon® Lens Compatible
+cef168 lens control is same as https://github.com/pinefeat/cef135
+the main (only?) difference is whether the interface is USB-UART or direct UART.
 
-[Pinefeat](https://www.pinefeat.co.uk) produces the adapter designed to interface between [Canon EF](https://www.canon.co.uk/store/ef-lenses/) & [EF-S lenses](https://www.canon.co.uk/store/ef-s-lenses/) and non-Canon camera bodies, incorporating features for electronic focus and aperture adjustments. Circuit board _cef168_, that comes with the adapter, provides software programming interface allowing control of the lens focus and aperture positions.
+[Pinefeat](https://www.pinefeat.co.uk) produces the adapter designed to interface between [Canon EF](https://www.canon.co.uk/store/ef-lenses/) & [EF-S lenses](https://www.canon.co.uk/store/ef-s-lenses/) and non-Canon camera bodies, incorporating features for electronic focus and aperture adjustments. Circuit board _cef168_ or _cef135_, that comes with the adapter, provides software programming interface allowing control of the lens focus and aperture positions.
 
 This repository contains kernel driver, configuration and calibration tools that allow you to use the adapter with [Raspberry Pi Camera](https://www.raspberrypi.com/documentation/accessories/camera.html).
 
@@ -270,7 +272,10 @@ The control board serial protocol is described [here](doc/serial.md).
 A standalone, cross-platform (Windows/Linux/macOS) app for controlling
 focus/aperture directly over this serial interface — with no INDI/ASCOM
 dependency — is available in [`python/`](python/README.md), providing both a
-CLI (`cef168`) and a GUI (`cef168-gui`).
+CLI (`pinefeat-focuser`) and a GUI (`pinefeat-focuser-gui`). It talks
+generically to any Pinefeat focuser board that implements this protocol
+(including this board and the USB-connected [cef135](https://github.com/pinefeat/cef135)),
+not just this one.
 
 ## Helpful Hints
 

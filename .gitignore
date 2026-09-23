@@ -36,7 +36,7 @@
 
 .clang-format
 
-# Python (python/cef168_control standalone app)
+# Python (python/pinefeat_focuser standalone app)
 python/.venv/
 python/__pycache__/
 python/**/__pycache__/

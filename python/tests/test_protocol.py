@@ -1,6 +1,6 @@
 import pytest
 
-from cef168_control import protocol as proto
+from pinefeat_focuser import protocol as proto
 
 
 # -- command builders ---------------------------------------------------

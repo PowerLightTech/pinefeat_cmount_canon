@@ -6,7 +6,7 @@ from collections import deque
 
 
 class FakeTransport:
-    """Stand-in for :class:`cef168_control.device.SerialTransport`.
+    """Stand-in for :class:`pinefeat_focuser.device.SerialTransport`.
 
     Responses can be queued per-command (a mapping of command -> deque of
     responses) or a single default response callable can be supplied.

@@ -1,4 +1,4 @@
-"""JSON-based configuration persistence for the standalone cef168 app.
+"""JSON-based configuration persistence for the standalone Pinefeat focuser app.
 
 Stores the last-used connection settings and any number of named connection
 profiles (port/baud) in a single JSON file under an OS-appropriate config
@@ -13,7 +13,7 @@ import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
-APP_DIR_NAME = "cef168"
+APP_DIR_NAME = "pinefeat-focuser"
 CONFIG_FILE_NAME = "config.json"
 
 

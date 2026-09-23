@@ -1,4 +1,4 @@
-"""Tkinter GUI for controlling a cef168 lens controller board over serial."""
+"""Tkinter GUI for controlling a Pinefeat focuser board over serial."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ POLL_INTERVAL_S = 0.5
 class LensApp(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("cef168 Lens Control")
+        self.title("Pinefeat Focuser Control")
         self.geometry("480x520")
         self.resizable(False, False)
 
@@ -178,7 +178,7 @@ class LensApp(tk.Tk):
                 try:
                     status = lens.get_status()
                     self._status_queue.put(status)
-                except proto.CefError as exc:
+                except proto.PinefeatFocuserError as exc:
                     self._status_queue.put(exc)
             self._poll_stop.wait(POLL_INTERVAL_S)
 
@@ -314,7 +314,7 @@ class LensApp(tk.Tk):
             return
         try:
             action()
-        except proto.CefError as exc:
+        except proto.PinefeatFocuserError as exc:
             messagebox.showerror("Device error", str(exc))
         except Exception as exc:  # noqa: BLE001
             messagebox.showerror("Error", str(exc))

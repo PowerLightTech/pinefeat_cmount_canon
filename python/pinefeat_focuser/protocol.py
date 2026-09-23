@@ -1,4 +1,5 @@
-"""Command builders and response parsers for the cef168 ASCII serial protocol.
+"""Command builders and response parsers for the Pinefeat focuser ASCII serial
+protocol (shared by cef168, cef135, and other compatible boards).
 
 This module is pure (no I/O): it only knows how to build command strings to
 send over the wire and how to parse/validate the text responses documented in
@@ -14,18 +15,18 @@ from dataclasses import dataclass
 # --------------------------------------------------------------------------
 
 
-class CefError(Exception):
-    """Base class for all cef168 protocol errors."""
+class PinefeatFocuserError(Exception):
+    """Base class for all Pinefeat focuser protocol errors."""
 
 
-class LensNotConnectedError(CefError):
+class LensNotConnectedError(PinefeatFocuserError):
     """Raised when the device reports ``nc`` (lens not connected)."""
 
     def __init__(self) -> None:
         super().__init__("Lens is not connected to the controller")
 
 
-class InvalidResponseError(CefError):
+class InvalidResponseError(PinefeatFocuserError):
     """Raised when the device reports ``er`` or an unparsable response."""
 
     def __init__(self, command: str, response: str) -> None:
@@ -36,7 +37,7 @@ class InvalidResponseError(CefError):
         )
 
 
-class InvalidParameterError(CefError):
+class InvalidParameterError(PinefeatFocuserError):
     """Raised when a caller supplies a parameter outside the accepted range."""
 
 

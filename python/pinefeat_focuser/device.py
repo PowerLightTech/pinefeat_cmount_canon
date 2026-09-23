@@ -1,4 +1,4 @@
-"""High-level, thread-safe API for talking to a cef168 board over serial."""
+"""High-level, thread-safe API for talking to a Pinefeat focuser board over serial."""
 
 from __future__ import annotations
 
@@ -77,7 +77,8 @@ class SerialTransport:
 
 
 class LensController:
-    """High-level, thread-safe controller for a cef168 board.
+    """High-level, thread-safe controller for a Pinefeat focuser board
+    (cef168, cef135, and other boards implementing the same protocol).
 
     Example::
 

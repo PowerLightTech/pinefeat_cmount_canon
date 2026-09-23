@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cef168-control"
+name = "pinefeat-focuser-control"
 version = "0.1.0"
-description = "Standalone controller (CLI + GUI) for the Pinefeat cef168 lens controller serial protocol"
+description = "Standalone controller (CLI + GUI) for Pinefeat focuser boards (cef168, cef135, and other boards implementing the same serial protocol)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -19,8 +19,8 @@ dev = [
 ]
 
 [project.scripts]
-cef168 = "cef168_control.cli:main"
-cef168-gui = "cef168_control.gui:main"
+pinefeat-focuser = "pinefeat_focuser.cli:main"
+pinefeat-focuser-gui = "pinefeat_focuser.gui:main"
 
 [tool.setuptools.packages.find]
-include = ["cef168_control*"]
+include = ["pinefeat_focuser*"]
