@@ -18,7 +18,6 @@ The adapter supports USB CDC (Communications Device Class) and emulates serial c
 
 ## Table of contents
 * [Disclaimer](#disclaimer)
-* [Assembly](#assembly)
 * [Quick test](#quick-test)
 * [Installation](#installation)
 * [Calibration](#calibration)
@@ -36,25 +35,6 @@ The adapter has electronic communication capabilities obtained by reverse engine
 Due to potential firmware differences, electronic variations, and undiscovered incompatibilities, some lenses may not function as expected, resulting in limitations in autofocus or aperture control.
 
 This product is provided as is, without any express or implied warranties regarding its compatibility with specific lenses. Pinefeat is not liable for any damage, malfunctions, or performance issues arising from its use.
-
-## Assembly
-
-Theoretically, this solution supports any Raspberry Pi-compatible camera with a C/CS or M12 mount. In practice, compatibility depends on:
- - CSI Connector Matching – The control board must have the same CSI connector as the camera module.
- - Physical Alignment – The camera and control board must have compatible sizes and matching mount holes.
- - Back Focus Length – The lens mount must provide the correct back focus distance for the Canon lens.
-
-For tested and **ready-to-use** assemblies, refer to the PDF guides below. These include step-by-step instructions for attaching the lens controller, securing the camera module, and making electrical connections.
-
- - [Raspberry Pi High Quality Camera (CS Mount variant)](https://docs.pinefeat.co.uk/cef168-assembly-rpi-hq-camera.pdf)
- - [Arducam IMX708 Camera Module (M12 Mount variant)](https://docs.pinefeat.co.uk/cef168-assembly-arducam-imx708.pdf)
- - [OneInchEye Camera Board](https://docs.pinefeat.co.uk/cef168-assembly-oneincheye-camera.pdf)
-
-![Assembly of Pinefeat Lens Controller and Arducam IMX708 Camera Module](https://docs.pinefeat.co.uk/cef168-assembly-arducam-imx708.jpg)
-
-To assemble the setup, 3D-print the [following mount](https://www.printables.com/model/1371439-lens-mount-for-raspberry-pi-camera-with-pinefeat-l) to hold all components together.
-
-Ensure you follow the assembly guide carefully before proceeding with the setup and usage instructions in this manual.
 
 ## Quick test
 
