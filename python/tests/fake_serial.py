@@ -17,7 +17,7 @@ class FakeTransport:
         self.sent: list[str] = []
         self.is_open = True
 
-    def send(self, command: str) -> str:
+    def send(self, command: str, timeout: float | None = None) -> str:
         self.sent.append(command)
         if command not in self.responses or not self.responses[command]:
             raise AssertionError(f"No canned response for command {command!r}")

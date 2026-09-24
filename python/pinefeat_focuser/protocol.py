@@ -37,6 +37,28 @@ class InvalidResponseError(PinefeatFocuserError):
         )
 
 
+class CalibrationFailedError(InvalidResponseError):
+    """Raised when the ``c`` (calibrate) command is rejected with ``er``.
+
+    Based on Pinefeat's own tooling (see the ``cef135`` ASCOM driver), the most
+    common cause is that the lens is set to MF (Manual Focus) rather than AF
+    (Autofocus) -- the controller can only drive the focus motor in AF mode.
+    Other causes include the lens not being fully seated on the mount, or the
+    AF/MF switch being toggled while a command is in flight.
+    """
+
+    def __init__(self, response: str) -> None:
+        self.command = "c"
+        self.response = response
+        PinefeatFocuserError.__init__(
+            self,
+            f"Calibration failed (device returned {response!r}). Check that "
+            "the lens's AF/MF switch is set to AF, that the lens is fully "
+            "seated on the mount, and that no other command is in progress, "
+            "then try again.",
+        )
+
+
 class InvalidParameterError(PinefeatFocuserError):
     """Raised when a caller supplies a parameter outside the accepted range."""
 

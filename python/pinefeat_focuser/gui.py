@@ -28,10 +28,10 @@ class LensApp(tk.Tk):
         self._poll_thread: threading.Thread | None = None
 
         self._build_connection_frame()
+        self._build_calibrate_frame()
         self._build_status_frame()
         self._build_focus_frame()
         self._build_aperture_frame()
-        self._build_calibrate_frame()
 
         self._set_controls_enabled(False)
         self._refresh_ports()
@@ -291,15 +291,49 @@ class LensApp(tk.Tk):
     def _build_calibrate_frame(self) -> None:
         frame = ttk.LabelFrame(self, text="Calibration")
         frame.pack(fill="x", padx=10, pady=5)
-        self._add_button(frame, "Run calibration", self._calibrate)
+        self.calibrate_btn = self._add_button(frame, "Run calibration", self._calibrate)
+        self.calibrate_status_var = tk.StringVar(value="")
+        ttk.Label(frame, textvariable=self.calibrate_status_var).pack(
+            side="left", padx=5
+        )
         self._calibrate_controls = [frame]
 
     def _calibrate(self) -> None:
+        if self.lens is None:
+            messagebox.showerror("Error", "Not connected.")
+            return
         if not messagebox.askyesno(
-            "Calibrate", "This traverses the full focus range. Continue?"
+            "Calibrate",
+            "This traverses the full focus range and can take a while. Continue?",
         ):
             return
-        self._safe_call(self.lens.calibrate)
+        # Calibration can take much longer than other commands, so it runs on
+        # a background thread to avoid freezing the GUI, with the controls
+        # disabled meanwhile so other commands can't race with it.
+        self._set_controls_enabled(False)
+        self.connect_btn.config(state="disabled")
+        self.calibrate_status_var.set("Calibrating... please wait")
+
+        def worker() -> None:
+            try:
+                self.lens.calibrate()
+            except Exception as exc:  # noqa: BLE001 - surfaced to the user
+                self.after(0, self._on_calibrate_done, exc)
+            else:
+                self.after(0, self._on_calibrate_done, None)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _on_calibrate_done(self, error: Exception | None) -> None:
+        self.calibrate_status_var.set("")
+        self._set_controls_enabled(True)
+        self.connect_btn.config(state="normal")
+        if error is None:
+            messagebox.showinfo("Calibrate", "Calibration completed successfully.")
+        elif isinstance(error, proto.PinefeatFocuserError):
+            messagebox.showerror("Device error", str(error))
+        else:
+            messagebox.showerror("Error", str(error))
 
     # -- helpers -----------------------------------------------------------
 

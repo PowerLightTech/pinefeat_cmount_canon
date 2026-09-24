@@ -49,6 +49,12 @@ def test_calibrate_not_connected_raises():
         lens.calibrate()
 
 
+def test_calibrate_error_raises_calibration_failed_error():
+    lens = make_lens({"c": "er"})
+    with pytest.raises(proto.CalibrationFailedError):
+        lens.calibrate()
+
+
 def test_get_focus_position_range():
     lens = make_lens({"r": "0-1203"})
     r = lens.get_focus_position_range()

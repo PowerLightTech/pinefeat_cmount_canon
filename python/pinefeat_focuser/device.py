@@ -19,6 +19,12 @@ except ImportError as exc:  # pragma: no cover - exercised only without pyserial
 DEFAULT_BAUD_RATE = 115200
 DEFAULT_TIMEOUT = 2.0
 
+# Calibration traverses the full focus range (min -> infinity) before the
+# device replies, which can take much longer than the default read timeout.
+# Use a generous, dedicated timeout just for that command so a slow-but-still
+# calibrating lens doesn't get treated as a comms failure.
+CALIBRATE_TIMEOUT = 60.0
+
 
 @dataclass(frozen=True)
 class PortInfo:
@@ -67,10 +73,20 @@ class SerialTransport:
     def is_open(self) -> bool:
         return bool(self._serial and self._serial.is_open)
 
-    def send(self, command: str) -> str:
+    def send(self, command: str, timeout: float | None = None) -> str:
         self._serial.reset_input_buffer()
         self._serial.write((command + "\r\n").encode("ascii"))
-        raw = self._serial.readline()
+        if timeout is None:
+            raw = self._serial.readline()
+        else:
+            # Temporarily widen the read timeout for slow commands (e.g.
+            # calibration) without affecting the timeout used elsewhere.
+            previous_timeout = self._serial.timeout
+            self._serial.timeout = timeout
+            try:
+                raw = self._serial.readline()
+            finally:
+                self._serial.timeout = previous_timeout
         if not raw:
             raise proto.InvalidResponseError(command, "<no response>")
         return raw.decode("ascii", errors="replace").strip()
@@ -111,9 +127,9 @@ class LensController:
     def __exit__(self, *_exc_info) -> None:
         self.close()
 
-    def _send(self, command: str) -> str:
+    def _send(self, command: str, timeout: float | None = None) -> str:
         with self._lock:
-            return self._transport.send(command)
+            return self._transport.send(command, timeout=timeout)
 
     # -- info ----------------------------------------------------------
 
@@ -144,7 +160,13 @@ class LensController:
 
     def calibrate(self) -> None:
         cmd = proto.cmd_calibrate()
-        proto.parse_ok(cmd, self._send(cmd))
+        response = self._send(cmd, timeout=CALIBRATE_TIMEOUT)
+        try:
+            proto.parse_ok(cmd, response)
+        except proto.InvalidResponseError as exc:
+            if response.strip().lower() == "er":
+                raise proto.CalibrationFailedError(response) from exc
+            raise
 
     # -- focus -----------------------------------------------------------
 
